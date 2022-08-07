@@ -10,7 +10,7 @@ const sessionStorage = new MemoryStore()
 const authMiddleware = require('./../middlewares/auth.middleware')
 
 router.use(session({
-    secret: 'esa', // salt
+    secret: process.env.SESSION_SECRET, // salt
     resave: false,
     store: sessionStorage,
     saveUninitialized: false,
@@ -32,7 +32,7 @@ router.get('/sign-up', authMiddleware.isGuest, userController.signup)
 router.post('/sign-up', authMiddleware.isGuest, userController.register)
 
 // User Setup
-router.put('/setting/:id', authMiddleware.isAuthenticated, userController.updateUser)
+router.post('/setting', authMiddleware.isAuthenticated, userController.updateUser)
 
 router.get('/setting', authMiddleware.isAuthenticated, userController.setting)
 

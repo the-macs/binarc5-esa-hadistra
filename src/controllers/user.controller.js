@@ -5,6 +5,7 @@ module.exports = {
     login: (req, res) => {
         res.render('login', {
             layout: 'layouts/_main-layout',
+            title: 'User Login',
             message: req.session.err
         })
     },
@@ -36,7 +37,8 @@ module.exports = {
     },
     signup: (req, res) => {
         res.render('signup', {
-            layout: 'layouts/_main-layout'
+            layout: 'layouts/_main-layout',
+            title: 'User Register',
         })
     },
     register: (req, res) => {
@@ -55,15 +57,26 @@ module.exports = {
         res.redirect('/login')
     },
     updateUser: (req, res) => {
+        const _id = req.body._id
+        users.filter((user) => {
+            if (user.id == _id) {
+                user.id = _id
+                user.name = req.body.name
+                if (req.body.password != '')
+                    user.password = req.body.password
 
-        res.send(req)
-        // res.render('setting', {
-        //     user: req.session.user
-        // })
+                req.session.user = user
+
+                return user
+            }
+        })
+
+        res.redirect('/')
     },
     setting: (req, res) => {
         res.render('setting', {
             layout: 'layouts/_main-layout',
+            title: 'User Setting',
             user: req.session.user
         })
     }

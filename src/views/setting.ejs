@@ -1,6 +1,7 @@
 <main class="form-signin w-100 m-auto">
 
-    <form method="PUT" action="/setting/<%= user.id %>">
+    <form method="POST" action="/setting">
+        <input type="hidden" name="_id" value="<%= user.id %>">
         <h1 class="h3 mb-3 fw-normal">User Setting</h1>
 
         <div class="form-floating mb-2">
