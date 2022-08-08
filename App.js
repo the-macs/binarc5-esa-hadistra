@@ -42,7 +42,6 @@ app.use(session({
     }
 }))
 
-app.use(reroute.escape404)
 
 // Route User
 app.use(commonRoute)
@@ -50,6 +49,7 @@ app.use(userRoute)
 
 app.use(apiUserRoute)
 
+app.use(reroute.escape404)
 // Running Server
 app.listen(process.env.PORT || port, () => {
     console.log('Server Running ...')
