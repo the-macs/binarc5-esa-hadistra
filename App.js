@@ -15,6 +15,8 @@ const userRoute = require('./src/routes/user.route')
 
 const apiUserRoute = require('./src/routes/api/user.route')
 
+const secret = 'jakut-klonop-2022'
+
 
 // Untuk return json / API
 // app.use(express.json())
@@ -30,7 +32,7 @@ app.use(expressLayouts)
 
 
 app.use(session({
-    secret: process.env.SESSION_SECRET, // salt
+    secret: process.env.SESSION_SECRET || secret, // salt
     resave: false,
     store: sessionStorage,
     saveUninitialized: false,
