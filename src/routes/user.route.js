@@ -3,9 +3,7 @@ const router = express.Router()
 
 const userController = require('./../controllers/user.controller')
 
-
 const authMiddleware = require('./../middlewares/auth.middleware')
-
 
 // Authentication
 router.get('/login', authMiddleware.isGuest, userController.login)
@@ -23,5 +21,7 @@ router.post('/sign-up', authMiddleware.isGuest, userController.register)
 router.post('/setting', authMiddleware.isAuthenticated, userController.updateUser)
 
 router.get('/setting', authMiddleware.isAuthenticated, userController.setting)
+
+router.post('/delete-account', authMiddleware.isAuthenticated, userController.deleteUser)
 
 module.exports = router

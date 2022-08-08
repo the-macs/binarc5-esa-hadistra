@@ -23,7 +23,11 @@
         </div>
         <button class="w-100 btn btn-lg btn-primary mt-4" type="submit">Update</button>
     </form>
-    <a class="w-100 btn btn-lg btn-danger mt-4" type="submit">Delete Account</a>
+    <form action="/delete-account" method="POST">
+        <input type="hidden" name="_id" value="<%= user.id %>">
+        <button class="w-100 btn btn-lg btn-danger mt-4" type="submit"
+            onclick="return confirm('Sure to delete this account ?')">Delete Account</button>
+    </form>
     <p class="text-muted my-3"><sup><em><a href="/">Back to home</a></em></sup></p>
     <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
 </main>

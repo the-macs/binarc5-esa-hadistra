@@ -79,5 +79,15 @@ module.exports = {
             title: 'User Setting',
             user: req.session.user
         })
+    },
+    deleteUser: (req, res) => {
+        const _id = req.body._id
+
+        userIndex = users.findIndex((user) => user.id == _id)
+
+        users.splice(userIndex, 1);
+
+        req.session.destroy()
+        res.redirect('/')
     }
 }
