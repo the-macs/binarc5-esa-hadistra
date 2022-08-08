@@ -1,23 +1,11 @@
 const express = require('express')
-const { MemoryStore } = require('express-session')
-const session = require('express-session')
 const router = express.Router()
 
 const userController = require('./../controllers/user.controller')
 
-const sessionStorage = new MemoryStore()
 
 const authMiddleware = require('./../middlewares/auth.middleware')
 
-router.use(session({
-    secret: process.env.SESSION_SECRET, // salt
-    resave: false,
-    store: sessionStorage,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 60 * 60 * 10000
-    }
-}))
 
 // Authentication
 router.get('/login', authMiddleware.isGuest, userController.login)
