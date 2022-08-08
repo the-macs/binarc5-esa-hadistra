@@ -17,6 +17,8 @@ const apiUserRoute = require('./src/routes/api/user.route')
 
 const secret = 'jakut-klonop-2022'
 
+const reroute = require('./src/middlewares/reroute.middleware')
+
 
 // Untuk return json / API
 // app.use(express.json())
@@ -30,7 +32,6 @@ app.set('views', './src/views')
 
 app.use(expressLayouts)
 
-
 app.use(session({
     secret: process.env.SESSION_SECRET || secret, // salt
     resave: false,
@@ -40,6 +41,8 @@ app.use(session({
         maxAge: 60 * 60 * 10000
     }
 }))
+
+app.use(reroute.escape404)
 
 // Route User
 app.use(commonRoute)
