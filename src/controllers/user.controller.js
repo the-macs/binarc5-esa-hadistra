@@ -41,24 +41,32 @@ module.exports = {
         res.render('signup', {
             layout: 'layouts/_main-layout',
             title: 'User Register',
+            message: req.session.err
         })
     },
     register: async (req, res) => {
-        const { name, username, password } = req.body
+        const { name, username, password, password_confirmation } = req.body
 
         const userRegistered = dataUsers.find((data) => data.username == username)
 
         if (userRegistered) {
             req.session.err = "Username already exist"
             res.redirect('/sign-up')
+        } else {
+            if (password !== password_confirmation) {
+                req.session.err = "Password doesn't match"
+                res.redirect('/sign-up')
+            } else {
+                const salt = await bcrypt.genSalt(10)
+                const hashedPassword = await bcrypt.hash(password, salt)
+
+                users.storeUser(name, username, hashedPassword)
+
+                res.redirect('/login')
+            }
         }
 
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt)
 
-        users.storeUser(name, username, hashedPassword)
-
-        res.redirect('/login')
     },
     updateUser: (req, res) => {
         const { _id, name, password } = req.body
