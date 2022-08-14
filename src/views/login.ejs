@@ -10,11 +10,13 @@
         </div>
         <% } %>
         <div class="form-floating mb-2">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username"
+                onkeypress="return restrictCharacters(this, event, alphaOnly);" required>
             <label for="floatingInput">Username</label>
         </div>
         <div class="form-floating mb-2">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"
+                required>
             <label for="floatingPassword">Password</label>
         </div>
         <button class="w-100 btn btn-lg btn-primary mt-4" type="submit">Sign in</button>
