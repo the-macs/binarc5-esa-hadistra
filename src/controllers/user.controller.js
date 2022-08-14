@@ -1,6 +1,7 @@
-const { v4: uuidv4 } = require('uuid')
 const bcrypt = require('bcrypt')
 const users = require('./../models/users.model')
+
+const dataUsers = users.getUsers()
 
 module.exports = {
     login: (req, res) => {
@@ -16,7 +17,7 @@ module.exports = {
             password: req.body.password
         }
 
-        const user = users.find((data) => data.username == dataInput.username)
+        const user = dataUsers.find((data) => data.username == dataInput.username)
 
         if (user) {
             const match = await bcrypt.compare(dataInput.password, user.password);
@@ -45,7 +46,7 @@ module.exports = {
     register: async (req, res) => {
         const { name, username, password } = req.body
 
-        const userRegistered = users.find((data) => data.username == username)
+        const userRegistered = dataUsers.find((data) => data.username == username)
 
         if (userRegistered) {
             req.session.err = "Username already exist"
@@ -55,24 +56,21 @@ module.exports = {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
 
-        users.push({
-            id: uuidv4(),
-            name,
-            username,
-            password: hashedPassword
-        })
+        users.storeUser(name, username, hashedPassword)
 
         res.redirect('/login')
     },
     updateUser: (req, res) => {
-        const _id = req.body._id
-        users.filter((user) => {
+        const { _id, name, password } = req.body
+        dataUsers.filter(async (user) => {
             if (user.id == _id) {
                 user.id = _id
-                user.name = req.body.name
-                if (req.body.password != '')
-                    user.password = req.body.password
-
+                user.name = name
+                if (password != '') {
+                    const salt = await bcrypt.genSalt(10)
+                    const hashedPassword = await bcrypt.hash(password, salt)
+                    user.password = hashedPassword
+                }
                 req.session.user = user
 
                 return user
@@ -91,9 +89,7 @@ module.exports = {
     deleteUser: (req, res) => {
         const _id = req.body._id
 
-        userIndex = users.findIndex((user) => user.id == _id)
-
-        users.splice(userIndex, 1);
+        users.deleteUser(_id)
 
         req.session.destroy()
         res.redirect('/')

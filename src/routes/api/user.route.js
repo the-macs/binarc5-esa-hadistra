@@ -5,7 +5,7 @@ const users = require('./../../models/users.model')
 
 // API
 router.get('/api/users', (req, res) => {
-    res.json(users)
+    res.json(users.getUsers())
 })
 
 module.exports = router
