@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
+const bcrypt = require('bcrypt')
 const users = require('./../models/users.model')
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
             message: req.session.err
         })
     },
-    auth: (req, res) => {
+    auth: async (req, res) => {
         const dataInput = {
             username: req.body.username,
             password: req.body.password
@@ -18,15 +19,15 @@ module.exports = {
         const user = users.find((data) => data.username == dataInput.username)
 
         if (user) {
-            if (user.password == dataInput.password) {
+            const match = await bcrypt.compare(dataInput.password, user.password);
+            if (match) {
                 req.session.user = user
                 res.redirect('/')
             } else {
                 req.session.err = "Incorrect password"
                 res.redirect('/login')
             }
-        }
-        else {
+        } else {
             req.session.err = "Username not found"
             res.redirect('/login')
         }
@@ -41,17 +42,24 @@ module.exports = {
             title: 'User Register',
         })
     },
-    register: (req, res) => {
-        const userRegistered = users.find((data) => data.username == req.body.username)
+    register: async (req, res) => {
+        const { name, username, password } = req.body
+
+        const userRegistered = users.find((data) => data.username == username)
 
         if (userRegistered) {
             req.session.err = "Username already exist"
             res.redirect('/sign-up')
         }
 
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password, salt)
+
         users.push({
             id: uuidv4(),
-            ...req.body
+            name,
+            username,
+            password: hashedPassword
         })
 
         res.redirect('/login')

@@ -10,11 +10,6 @@ const session = require('express-session')
 const { MemoryStore } = require('express-session')
 const sessionStorage = new MemoryStore()
 
-// const commonRoute = require('./src/routes/common.route')
-// const userRoute = require('./src/routes/user.route')
-
-// const apiUserRoute = require('./src/routes/api/user.route')
-
 const indexRoute = require('./src/routes/index')
 
 const secret = 'jakut-klonop-2022'
@@ -45,11 +40,7 @@ app.use(session({
 }))
 
 
-// Route User
-// app.use(commonRoute)
-// app.use(userRoute)
-
-// app.use(apiUserRoute)
+// Routee
 app.use(indexRoute)
 
 app.use(reroute.escape404)
