@@ -10,7 +10,7 @@ const session = require('express-session')
 const { MemoryStore } = require('express-session')
 const sessionStorage = new MemoryStore()
 
-const indexRoute = require('./src/routes/index')
+const indexRoute = require('./src/routes/index.route')
 
 const secret = 'jakut-klonop-2022'
 
