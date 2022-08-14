@@ -12,7 +12,11 @@ module.exports = {
         const token = req.header.authorization
         const verify = getUserVerified(token)
 
-        if (verify) next()
-        else res.redirect('/login')
+        if (verify) {
+            req.user = verify
+            next()
+        } else {
+            res.redirect('/login')
+        }
     }
 }

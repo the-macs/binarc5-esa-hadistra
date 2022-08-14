@@ -1,10 +1,9 @@
 const bcrypt = require('bcrypt')
 const users = require('./../models/users.model')
-const jwt = require('jsonwebtoken')
 
 const dataUsers = users.getUsers()
 
-const { generateToken, getUserVerified } = require('../utils/jtwToken.utils')
+const { generateToken } = require('../utils/jtwToken.utils')
 
 module.exports = {
     login: (req, res) => {
@@ -100,13 +99,6 @@ module.exports = {
         res.redirect('/')
     },
     setting: (req, res) => {
-        const token = req.header.authorization
-
-        if (token) {
-            const verify = getUserVerified(token)
-            req.user = verify
-        }
-
         res.render('setting', {
             layout: 'layouts/_main-layout',
             title: 'User Setting',

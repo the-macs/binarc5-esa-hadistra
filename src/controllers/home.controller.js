@@ -1,9 +1,8 @@
 const { getUserVerified } = require('./../utils/jtwToken.utils')
 
-
 module.exports = {
     index: (req, res) => {
-        const token = req.header['authorization']
+        const token = req.header.authorization
 
         if (token) {
             const verify = getUserVerified(token)
