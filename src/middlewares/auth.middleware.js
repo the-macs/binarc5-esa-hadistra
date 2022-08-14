@@ -1,10 +1,18 @@
+const { getUserVerified } = require('./../utils/jtwToken.utils')
+
 module.exports = {
     isGuest: (req, res, next) => {
-        if (!req.session.user) next()
+        const token = req.header.authorization
+        const verify = getUserVerified(token)
+
+        if (!verify) next()
         else res.redirect('/')
     },
     isAuthenticated: (req, res, next) => {
-        if (req.session.user) next()
+        const token = req.header.authorization
+        const verify = getUserVerified(token)
+
+        if (verify) next()
         else res.redirect('/login')
     }
 }

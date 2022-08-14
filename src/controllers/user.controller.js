@@ -1,7 +1,10 @@
 const bcrypt = require('bcrypt')
 const users = require('./../models/users.model')
+const jwt = require('jsonwebtoken')
 
 const dataUsers = users.getUsers()
+
+const { generateToken, getUserVerified } = require('../utils/jtwToken.utils')
 
 module.exports = {
     login: (req, res) => {
@@ -22,7 +25,10 @@ module.exports = {
         if (user) {
             const match = await bcrypt.compare(dataInput.password, user.password);
             if (match) {
-                req.session.user = user
+                const token = await generateToken(user.id)
+
+                req.header.authorization = token
+
                 res.redirect('/')
             } else {
                 req.session.err = "Incorrect password"
@@ -34,6 +40,8 @@ module.exports = {
         }
     },
     logout: (req, res) => {
+        delete req.header.authorization
+
         req.session.destroy()
         res.redirect('/')
     },
@@ -65,8 +73,6 @@ module.exports = {
                 res.redirect('/login')
             }
         }
-
-
     },
     updateUser: (req, res) => {
         const { _id, name, password } = req.body
@@ -74,30 +80,45 @@ module.exports = {
             if (user.id == _id) {
                 user.id = _id
                 user.name = name
+
                 if (password != '') {
                     const salt = await bcrypt.genSalt(10)
                     const hashedPassword = await bcrypt.hash(password, salt)
                     user.password = hashedPassword
                 }
-                req.session.user = user
+
+                req.user = user
 
                 return user
             }
         })
 
+        const token = generateToken(_id)
+
+        req.header.authorization = token
+
         res.redirect('/')
     },
     setting: (req, res) => {
+        const token = req.header.authorization
+
+        if (token) {
+            const verify = getUserVerified(token)
+            req.user = verify
+        }
+
         res.render('setting', {
             layout: 'layouts/_main-layout',
             title: 'User Setting',
-            user: req.session.user
+            user: req.user
         })
     },
     deleteUser: (req, res) => {
         const _id = req.body._id
 
         users.deleteUser(_id)
+
+        delete req.header.authorization
 
         req.session.destroy()
         res.redirect('/')
