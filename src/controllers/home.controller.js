@@ -1,11 +1,11 @@
 const { getUserVerified } = require('./../utils/jtwToken.utils')
 
 module.exports = {
-    index: (req, res) => {
+    index: async (req, res) => {
         const token = req.header.authorization
 
         if (token) {
-            const verify = getUserVerified(token)
+            const verify = await getUserVerified(token)
             req.user = verify
         }
 

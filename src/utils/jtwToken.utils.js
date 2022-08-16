@@ -15,7 +15,7 @@ module.exports = {
             },
             process.env.JWT_SECRET,
             {
-                expiresIn: '10m'
+                expiresIn: '10s'
             }
         )
 
@@ -23,9 +23,12 @@ module.exports = {
     },
     getUserVerified: (token) => {
         if (token) {
-            let verify = jwt.verify(token, process.env.JWT_SECRET)
-
-            return verify
+            try {
+                verify = jwt.verify(token, process.env.JWT_SECRET)
+                return verify
+            } catch (err) {
+                return false
+            }
         }
 
         return false
