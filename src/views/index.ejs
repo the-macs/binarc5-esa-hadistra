@@ -43,13 +43,16 @@
                                 <a class="nav-link px-4" aria-current="page" href="/">HOME</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-4" href="/">WORK</a>
+                                <a class="nav-link px-4" href="#game-feature">FEATURE</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-4" href="#">CONTACT</a>
+                                <a class="nav-link px-4" href="#sys-req">SYSTEM REQ.</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-4" href="#">ABOUT ME</a>
+                                <a class="nav-link px-4" href="#top-score">TOP SCORE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-4" href="#newsletter">NEWSLETTER</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link px-4" href="/api/users"><strong>USERS API</strong></a>
@@ -95,7 +98,7 @@
                         <h3 class=" display-5 fw-semibold">Experience new traditional game play</h3>
                     </div>
                     <div class="header-button">
-                        <a class="btn btn-warning fs-3 py-2 px-5 bounce-animation btn-play-now" href="/games"><i
+                        <a class="btn btn-warning fs-3 py-2 px-5 gradation-animation btn-play-now" href="/games"><i
                                 class="bi bi-dice-6"></i>&nbsp;
                             <% if (user) { %>
                             Play Now
@@ -103,11 +106,17 @@
                             Login to Play
                             <% } %></a>
                     </div>
+
                 </div>
+                <a href="#game-choice">
+                    <div class="header-caret align-text-bottom bounce-animation ">
+                        <p> THE STORY<br /><i class="bi bi-caret-down"></i></p>
+                    </div>
+                </a>
             </header>
 
             <!-- GAME CHOICE -->
-            <section class="game-choice d-flex align-items-center">
+            <section class="game-choice d-flex align-items-center" id="game-choice">
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-4 text-center text-md-start">
                         <h3 class="text-white">What's so special ?</h3>
@@ -153,7 +162,7 @@
             </section>
 
             <!-- GAME FEATURES -->
-            <section class="game-feature d-md-flex justify-content-center flex-column">
+            <section class="game-feature d-md-flex justify-content-center flex-column" id="game-feature">
                 <div class="row">
                     <div class="offset-md-6 col-md-5 col-sm-12 ps-md-5">
                         <h2 class="text-white text-center text-md-start">What's so special ?</h2>
@@ -191,7 +200,7 @@
             </section>
 
             <!-- SYSTEM REQUIREMENT -->
-            <section class="sys-req d-flex justify-content-center flex-column">
+            <section class="sys-req d-flex justify-content-center flex-column" id="sys-req">
                 <div class="row">
                     <div class="col-12 text-center pb-5 pb-md-0">
                         <h5 class="text-white">Can My Computer Run This Game ?</h5>
@@ -242,7 +251,7 @@
             </section>
 
             <!-- TOP SCORES -->
-            <section class="top-score d-flex justify-content-center">
+            <section class="top-score d-flex justify-content-center" id="top-score">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-4 offset-md-2">
                         <h2 class="display-4 text-white mb-3">TOP SCORES</h2>
@@ -332,7 +341,7 @@
             </section>
 
             <!-- NEWSLETTER -->
-            <section class="newsletter d-flex justify-content-center">
+            <section class="newsletter d-flex justify-content-center" id="newsletter">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-6 text-center">
                         <img class="w-50 img-fluid" src="images/skull.png" alt="Skull">

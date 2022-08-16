@@ -4,9 +4,6 @@
 
     font-family: 'Arial';
     font-style: normal;
-    /* font-weight: 400;
-    line-height: 28px;
-    letter-spacing: 2px; */
 }
 
 header {
@@ -55,7 +52,6 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* z-index: 0; */
 }
 
 .header-text>.header-title {
@@ -76,42 +72,69 @@ header {
     text-align: center;
 }
 
+.header-caret {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: medium;
+    font-weight: bold;
+    bottom: 0%;
+    text-decoration: none;
+}
+
+.header-caret>p {
+    text-decoration: none;
+    color: wheat;
+}
+
 .btn-play-now {
-    background: linear-gradient(120deg, darkmagenta, crimson, crimson);
-    background-size: 200% 100%;
-    background-position: 100% 0;
-    /* transition: background-position .5s; */
-    /* background-image: linear-gradient(to bottom left, red, yellow); */
+    background: linear-gradient(to bottom right, #ffc107, #ffe082, #ffc107, #ffe082, #ffc107);
+    background-size: 200% 200%;
+    border-color: transparent;
+    transition: background-position .5s;
 }
 
 .bounce-animation {
-    animation: bounce-1 3s linear infinite
+    animation: bounce-1 2s linear infinite
+}
+
+.gradation-animation {
+    animation: bg-gradation 3s linear infinite
 }
 
 @keyframes bounce-1 {
     0% {
-        background-position: 0 0;
         transform: translateY(0);
-    }
-
-    25% {
-        background-position: 25% -25%;
-        transform: translateY(-10px);
     }
 
     50% {
-        background-position: 100% 100%;
-        transform: translateY(0);
-    }
-
-    75% {
-        background-position: 50% 0;
-        transform: translateY(-10px);
+        transform: translateY(-40px);
     }
 
     100% {
-        background-position: 0 0;
         transform: translateY(0);
+    }
+}
+
+@keyframes bg-gradation {
+    0% {
+        background-position: 100% 100%;
+    }
+
+    25% {
+        background-position: 75% 75%;
+    }
+
+    50% {
+        background-position: 50% 50%;
+    }
+
+    75% {
+        background-position: 25% 25%;
+    }
+
+    100% {
+        background-position: 0% 0%;
     }
 }
 
